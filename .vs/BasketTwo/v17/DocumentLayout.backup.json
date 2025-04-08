@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:basketAPI.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\templates\\index.html",
+              "RelativeDocumentMoniker": "templates\\index.html",
+              "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\templates\\index.html",
+              "RelativeToolTip": "templates\\index.html",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAAAMsAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-03-11T19:10:16.96Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "basketAPI.py",
+              "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py",
+              "RelativeDocumentMoniker": "basketAPI.py",
+              "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py",
+              "RelativeToolTip": "basketAPI.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-03-11T19:09:37.314Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

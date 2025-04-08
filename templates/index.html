@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Basket Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        svg {
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Market Basket Analysis</h1>
+
+    <h2>Item Selection</h2>
+    <div id="itemButtons"></div>
+
+    <h2>Transactions</h2>
+    <svg id="transactionsChart" width="600" height="400"></svg>
+
+    <h2>Support Calculation</h2>
+    <p id="supportCalculation"></p>
+
+    <button onclick="fetchFrequentItemsets()">Show Frequent Itemsets</button>
+    <button onclick="fetchAssociationRules()">Show Association Rules</button>
+    <button onclick="fetchSupportLineChart()">Show Support Line Chart</button>
+    <button onclick="fetchSupportHistogram()">Show Support Histogram</button>
+
+    <button onclick="toggleHighLiftHighlight()">Highlight High-Lift Rules</button>
+
+
+    <h2>Frequent Itemsets</h2>
+    <svg id="frequentChart" width="600" height="400"></svg>
+
+    <h3>Minimum Confidence Threshold</h3>
+    <input type="range" id="confidenceSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateConfidenceThreshold(this.value)">
+    <span id="confidenceValue">0.50</span>
+
+    <h2>Association Rules</h2>
+    <svg id="associationChart" width="600" height="400"></svg>
+
+    <h2>Selected Rule Details</h2>
+    <div id="ruleDetails" style="margin: 10px; font-size: 16px;"></div>
+
+
+    <h2>Support Charts</h2>
+    <svg id="supportLineChart" width="600" height="400"></svg>
+    <svg id="supportHistogram" width="600" height="400"></svg>
+
+    <script>
+        let confidenceThreshold = 0.5;
+
+        function updateConfidenceThreshold(value) {
+            confidenceThreshold = parseFloat(value);
+            document.getElementById("confidenceValue").textContent = confidenceThreshold.toFixed(2);
+            fetchAssociationRules(); // Re-render with filtered rules
+        }
+
+
+
+        async function loadItemButtons() {
+            try {
+                const response = await fetch('/unique-items');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+
+                const buttonContainer = document.getElementById("itemButtons");
+                buttonContainer.innerHTML = ""; // Clear previous buttons
+
+                data.items.forEach(item => {
+                    const button = document.createElement("button");
+                    button.textContent = item;
+                    button.onclick = () => highlightItemOccurrences(item);
+                    buttonContainer.appendChild(button);
+                });
+            } catch (error) {
+                console.error("Error fetching unique items:", error);
+            }
+        }
+
+        async function fetchTransactions() {
+            try {
+                const response = await fetch('/transactions');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                drawTransactions(data.transactions);
+            } catch (error) {
+                console.error("Error fetching transactions:", error);
+            }
+        }
+
+
+
+        function drawTransactions(data) {
+            const svg = document.getElementById("transactionsChart");
+            svg.innerHTML = "";
+
+            data.forEach((transaction, i) => {
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", 20);
+                text.setAttribute("y", (i + 1) * 30);
+                text.setAttribute("font-size", "14px");
+                text.textContent = `Transaction ${i + 1}: ${transaction.join(', ')}`;
+                text.setAttribute("class", "transaction");
+                svg.appendChild(text);
+            });
+        }
+
+        function highlightItemOccurrences(item) {
+            const svg = document.getElementById("transactionsChart");
+            const transactionElements = svg.getElementsByClassName("transaction");
+
+            let count = 0;
+            for (let i = 0; i < transactionElements.length; i++) {
+                const textElement = transactionElements[i];
+                if (textElement.textContent.includes(item)) {
+                    textElement.setAttribute("fill", "red");
+                    count++;
+                } else {
+                    textElement.setAttribute("fill", "black");
+                }
+            }
+
+            const totalTransactions = transactionElements.length;
+            const support = (count / totalTransactions).toFixed(2);
+            document.getElementById("supportCalculation").textContent =
+                `"${item}" appears in ${count} out of ${totalTransactions} transactions (Support: ${support})`;
+        }
+
+        async function fetchFrequentItemsets() {
+            const response = await fetch('/frequent-itemsets');
+            const data = await response.json();
+            drawFrequentItemsets(data);
+        }
+
+        function drawFrequentItemsets(data) {
+            const svg = document.getElementById("frequentChart");
+            svg.innerHTML = "";
+
+            data.forEach((d, i) => {
+                const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                rect.setAttribute("x", i * 60 + 50);
+                rect.setAttribute("y", 400 - d.support * 300);
+                rect.setAttribute("width", 40);
+                rect.setAttribute("height", d.support * 300);
+                rect.setAttribute("fill", "steelblue");
+                svg.appendChild(rect);
+            });
+        }
+
+        async function fetchAssociationRules() {
+            const response = await fetch('/association-rules');
+            const data = await response.json();
+            drawAssociationRules(data);
+        }
+
+        function drawAssociationRules(data) {
+            const svg = document.getElementById("associationChart");
+            svg.innerHTML = "";
+
+            const width = 600;
+            const height = 400;
+            const radius = 15;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const spacing = 100;
+
+            let nodes = {};
+            let i = 0;
+
+            // Position nodes in a circle
+            data.nodes.forEach(node => {
+                const angle = (i / data.nodes.length) * 2 * Math.PI;
+                nodes[node] = {
+                    x: centerX + Math.cos(angle) * 150,
+                    y: centerY + Math.sin(angle) * 150
+                };
+                i++;
+            });
+
+            // Draw links with click handlers
+            data.links
+            .filter(link => link.confidence >= confidenceThreshold)
+            .forEach(link => {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", nodes[link.source].x);
+                line.setAttribute("y1", nodes[link.source].y);
+                line.setAttribute("x2", nodes[link.target].x);
+                line.setAttribute("y2", nodes[link.target].y);
+                line.setAttribute("stroke", "black");
+                line.setAttribute("stroke-width", link.confidence * 5);
+                line.style.cursor = "pointer";
+
+                // Hover highlight
+                line.addEventListener("mouseenter", () => {
+                    line.setAttribute("stroke", "blue");
+                });
+                line.addEventListener("mouseleave", () => {
+                    line.setAttribute("stroke", "black");
+                });
+
+                // Click explanation
+                line.addEventListener("click", () => {
+                    const explanation = `"${link.source}" ➞ "${link.target}"<br>
+                        Support: ${link.support}<br>
+                        Confidence: ${link.confidence}<br>
+                        Lift: ${link.lift}<br><br>
+                        Interpretation: Customers who buy <strong>${link.source}</strong> are 
+                        ${link.confidence * 100}% likely to also buy <strong>${link.target}</strong>. 
+                        This rule is ${link.lift > 1 ? 'stronger than' : 'weaker than'} chance (lift = ${link.lift}).`;
+
+                    document.getElementById("ruleDetails").innerHTML = explanation;
+                });
+
+                svg.appendChild(line);
+            });
+
+
+            // Draw nodes
+            data.nodes.forEach(node => {
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", nodes[node].x);
+                circle.setAttribute("cy", nodes[node].y);
+                circle.setAttribute("r", radius);
+                circle.setAttribute("fill", "orange");
+                svg.appendChild(circle);
+
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", nodes[node].x);
+                text.setAttribute("y", nodes[node].y - radius - 5);
+                text.setAttribute("text-anchor", "middle");
+                text.textContent = node;
+                svg.appendChild(text);
+            });
+        }
+
+
+
+        async function fetchSupportLineChart() {
+            const response = await fetch('/support-data');
+            const data = await response.json();
+            drawSupportLineChart(data);
+        }
+
+        function drawSupportLineChart(data) {
+            const svg = document.getElementById("supportLineChart");
+            svg.innerHTML = "";
+            const width = 600;
+            const height = 400;
+            const maxSupport = Math.max(...data.map(d => d.support));
+            const scaleFactor = (height - 50) / maxSupport;
+
+            for (let i = 0; i < data.length - 1; i++) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", (i * (width / data.length)) + 50);
+                line.setAttribute("y1", height - (data[i].support * scaleFactor) - 30);
+                line.setAttribute("x2", ((i + 1) * (width / data.length)) + 50);
+                line.setAttribute("y2", height - (data[i + 1].support * scaleFactor) - 30);
+                line.setAttribute("stroke", "blue");
+                line.setAttribute("stroke-width", "2");
+                svg.appendChild(line);
+            }
+
+            // Add X-axis label
+            const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            xLabel.setAttribute("x", width / 2);
+            xLabel.setAttribute("y", height - 5);
+            xLabel.setAttribute("text-anchor", "middle");
+            xLabel.setAttribute("font-size", "14px");
+            xLabel.textContent = "Index";
+            svg.appendChild(xLabel);
+
+            // Add Y-axis label
+            const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yLabel.setAttribute("x", 15);
+            yLabel.setAttribute("y", height / 2);
+            yLabel.setAttribute("text-anchor", "middle");
+            yLabel.setAttribute("font-size", "14px");
+            yLabel.setAttribute("transform", `rotate(-90, 15, ${height / 2})`);
+            yLabel.textContent = "Support Value";
+            svg.appendChild(yLabel);
+        }
+
+
+        async function fetchSupportHistogram() {
+            const response = await fetch('/support-data');
+            const data = await response.json();
+            drawSupportHistogram(data);
+        }
+
+        function drawSupportHistogram(data) {
+            const svg = document.getElementById("supportHistogram");
+            svg.innerHTML = "";
+            const width = 600;
+            const height = 400;
+            const barWidth = 40;
+            const maxSupport = Math.max(...data.map(d => d.support));
+            const scaleFactor = (height - 50) / maxSupport;
+
+            data.forEach((d, i) => {
+                const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                rect.setAttribute("x", i * (barWidth + 10) + 50);
+                rect.setAttribute("y", height - (d.support * scaleFactor) - 30);
+                rect.setAttribute("width", barWidth);
+                rect.setAttribute("height", d.support * scaleFactor);
+                rect.setAttribute("fill", "orange");
+                svg.appendChild(rect);
+            });
+
+            // Add X-axis label
+            const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            xLabel.setAttribute("x", width / 2);
+            xLabel.setAttribute("y", height - 5);
+            xLabel.setAttribute("text-anchor", "middle");
+            xLabel.setAttribute("font-size", "14px");
+            xLabel.textContent = "Item Index";
+            svg.appendChild(xLabel);
+
+            // Add Y-axis label
+            const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yLabel.setAttribute("x", 15);
+            yLabel.setAttribute("y", height / 2);
+            yLabel.setAttribute("text-anchor", "middle");
+            yLabel.setAttribute("font-size", "14px");
+            yLabel.setAttribute("transform", `rotate(-90, 15, ${height / 2})`);
+            yLabel.textContent = "Support Value";
+            svg.appendChild(yLabel);
+        }
+
+
+        // Load items and transactions on page load
+        loadItemButtons();
+        fetchTransactions();
+    </script>
+
+</body>
+</html>
