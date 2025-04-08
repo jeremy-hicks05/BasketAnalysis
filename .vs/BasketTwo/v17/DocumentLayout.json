@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\.streamlit\\config.toml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:.streamlit\\config.toml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\app.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:app.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{C9910188-B803-456D-95D8-D7C2996BB549}|BasketTwo.pyproj|solutionrelative:basketAPI.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -18,11 +30,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "config.toml",
+              "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\.streamlit\\config.toml",
+              "RelativeDocumentMoniker": ".streamlit\\config.toml",
+              "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\.streamlit\\config.toml",
+              "RelativeToolTip": ".streamlit\\config.toml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-08T15:39:47.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "requirements.txt",
+              "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\requirements.txt",
+              "RelativeDocumentMoniker": "requirements.txt",
+              "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\requirements.txt",
+              "RelativeToolTip": "requirements.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-04-08T15:39:13.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "app.py",
+              "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\app.py",
+              "RelativeDocumentMoniker": "app.py",
+              "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\app.py",
+              "RelativeToolTip": "app.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-04-08T15:38:01.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\templates\\index.html",
               "RelativeDocumentMoniker": "templates\\index.html",
@@ -34,13 +85,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "basketAPI.py",
               "DocumentMoniker": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py",
               "RelativeDocumentMoniker": "basketAPI.py",
               "ToolTip": "C:\\Users\\jeremy.hicks\\source\\repos\\BasketTwo\\basketAPI.py",
               "RelativeToolTip": "basketAPI.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2025-03-11T19:09:37.314Z",
               "EditorCaption": ""

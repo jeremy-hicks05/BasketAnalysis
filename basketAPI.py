@@ -1,11 +1,12 @@
-from flask import Flask, jsonify, render_template
+# from flask import Flask
+from flask import jsonify, render_template
 from flask_cors import CORS
 import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori, association_rules
 
-app = Flask(__name__, template_folder="templates")
-CORS(app)
+#app = Flask(__name__, template_folder="templates")
+#CORS(app)
 
 # Sample transactions dataset
 transactions = [
